@@ -66,23 +66,21 @@
   @media(max-width:980px){nav a{font-size:10px;padding:6px 6px}}
 
   /* ── KITT-Scanner unter der Kopfzeile ── */
-  .scanner{position:fixed;top:var(--nav-h);left:0;right:0;height:4px;z-index:19;
-    overflow:hidden;pointer-events:none;background:rgba(235,255,26,.04)}
-  .scanner::before{content:"";position:absolute;top:0;bottom:0;left:0;width:200px;
+  .scanner{position:fixed;top:var(--nav-h);left:0;right:0;height:2px;z-index:19;
+    overflow:hidden;pointer-events:none;background:rgba(235,255,26,.02)}
+  .scanner::before{content:"";position:absolute;top:0;bottom:0;left:0;width:240px;
     background:linear-gradient(90deg,
       transparent,
-      rgba(235,255,26,.15) 30%,
-      var(--bronze-soft) 48%,
-      #ffffff 50%,
-      var(--bronze-soft) 52%,
-      rgba(235,255,26,.15) 70%,
+      rgba(235,255,26,.08) 35%,
+      rgba(235,255,26,.45) 50%,
+      rgba(235,255,26,.08) 65%,
       transparent);
-    filter:drop-shadow(0 0 6px var(--bronze)) drop-shadow(0 0 14px rgba(235,255,26,.7));
-    animation:kitt 3.4s ease-in-out infinite}
+    filter:drop-shadow(0 0 4px rgba(235,255,26,.35));
+    animation:kitt 7.5s ease-in-out infinite}
   @keyframes kitt{
-    0%{transform:translateX(-200px)}
+    0%{transform:translateX(-240px)}
     50%{transform:translateX(100vw)}
-    100%{transform:translateX(-200px)}
+    100%{transform:translateX(-240px)}
   }
   @media(prefers-reduced-motion:reduce){.scanner::before{animation:none;opacity:.5;left:50%;transform:translateX(-50%)}}
 
