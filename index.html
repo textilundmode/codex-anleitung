@@ -224,6 +224,13 @@
     width:21px;height:21px;border-radius:50%;display:flex;align-items:center;justify-content:center;
     font-family:var(--mono);font-weight:600;font-size:11px;color:var(--bg);background:var(--bronze)}
 
+  /* ── Großer Link-Button (Abschluss) ──── */
+  .dllink{display:inline-block;margin-top:26px;font-family:var(--mono);font-weight:600;
+    font-size:clamp(16px,2.4vw,24px);letter-spacing:.5px;color:var(--bg);background:var(--gold);
+    padding:16px 30px;border-radius:12px;border-bottom:none;
+    box-shadow:0 0 30px rgba(57,255,20,.40);transition:.2s}
+  .dllink:hover{background:#5cff42;color:var(--bg);box-shadow:0 0 44px rgba(57,255,20,.65);transform:translateY(-2px)}
+
   /* ── Steuerung ──────────────────────── */
   .progress{position:fixed;left:0;bottom:0;height:3px;background:var(--pink);
     box-shadow:0 0 10px var(--pink);z-index:30;transition:width .4s ease}
@@ -554,10 +561,23 @@
       oder <strong>Fleißarbeit</strong> ist – Codex kann es übernehmen.</p>
   </section>
 
+  <!-- 9 ── Abschluss: Link zum Nachlesen ─── -->
+  <section class="slide" data-titel="Online" style="text-align:center;align-items:center">
+    <span class="eyebrow reveal" style="align-self:center">Zum Nachlesen · jederzeit</span>
+    <h1 class="reveal">Alles in Ruhe<br><em style="color:var(--bronze)">nachschauen</em>.</h1>
+    <hr class="rule reveal" style="margin-left:auto;margin-right:auto">
+    <p class="lead reveal" style="max-width:640px;margin-left:auto;margin-right:auto">
+      Diese Anleitung steht online – einfach den Link öffnen und Schritt für Schritt
+      durchgehen, wann immer du magst.</p>
+    <a class="dllink reveal" href="https://ki-textil-mode.de/codex-anleitung/" target="_blank" rel="noopener">
+      ki-textil-mode.de/codex-anleitung</a>
+    <p class="small reveal" style="margin-top:22px">textil+mode · Einleitung Codex · 25.06.2026</p>
+  </section>
+
 </div>
 
 <div class="progress" id="progress"></div>
-<div class="pager" id="pager"><b>1</b> / 8</div>
+<div class="pager" id="pager"><b>1</b> / 9</div>
 <div class="arrows"><button onclick="go(i-1)">‹</button><button onclick="go(i+1)">›</button></div>
 
 <script>
