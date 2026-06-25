@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Codex – Einleitung · textil+mode</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* fast schwarz, angedeutetes Raster */
+    --bg:#0A0A0B; --bg-elev:#141416; --bg-elev2:#1B1B1E;
+    /* Silber = Standardschrift, Gold = Überschriften, Bronze = Akzent */
+    --silver:#D7D9DD; --silver-dim:#9A9DA4;
+    /* Gold -> Neongrün (Überschriften), Bronze -> Neongelb (Akzent) */
+    --gold:#39FF14; --bronze:#EBFF1A; --bronze-soft:#F3FF5C;
+    /* Aliase, damit bestehende Regeln weiter greifen */
+    --yellow:var(--silver); --yellow-dim:var(--silver-dim);
+    --green:var(--gold); --pink:var(--bronze); --pink-soft:var(--bronze-soft);
+    --grid:rgba(235,255,26,.05); --line:rgba(235,255,26,.18);
+    --sans:"Jost",ui-sans-serif,system-ui,"Segoe UI",Arial,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+    --nav-h:62px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:
+      linear-gradient(var(--grid) 1px,transparent 1px) 0 0/40px 40px,
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/40px 40px,
+      radial-gradient(820px 620px at 86% -12%, rgba(57,255,20,.08), transparent 60%),
+      radial-gradient(720px 600px at -6% 112%, rgba(235,255,26,.06), transparent 60%),
+      var(--bg);
+    color:var(--yellow); font-family:var(--sans);
+    font-weight:300; font-size:16px; line-height:1.7;
+    overflow:hidden;
+  }
+  h1,h2,h3{font-weight:500;color:var(--green);letter-spacing:.01em;
+    font-family:var(--sans);text-shadow:0 0 18px rgba(227,197,114,.18)}
+  h1{font-size:clamp(34px,5.6vw,66px);line-height:1.04}
+  h2{font-size:clamp(25px,3.6vw,40px);margin-bottom:4px}
+  strong{color:var(--green);font-style:normal;font-weight:600}
+  em{color:var(--pink-soft)}
+  a{color:var(--pink);text-decoration:none;border-bottom:1px solid var(--line);transition:.2s}
+  a:hover{color:var(--pink-soft);border-bottom-color:var(--pink-soft)}
+
+  /* ── Top-Nav ─────────────────────────── */
+  nav{
+    position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:20;
+    display:flex;align-items:center;gap:4px;padding:0 22px;
+    background:rgba(10,10,11,.85);backdrop-filter:blur(9px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .marke{font-weight:600;color:var(--green);font-size:20px;
+    font-family:var(--sans);
+    letter-spacing:1px;margin-right:auto;text-shadow:0 0 12px rgba(227,197,114,.35);white-space:nowrap}
+  nav .marke{display:flex;align-items:center}
+  nav .marke span{color:var(--pink)}
+  nav .marke .logo{height:27px;width:auto;opacity:.92;filter:brightness(0) invert(1) sepia(.35) saturate(.6) hue-rotate(355deg)}
+  nav .marke .brand-txt{color:var(--green);margin-left:18px;padding-left:18px;border-left:1px solid var(--line);font-size:20px}
+  nav a{font-family:var(--sans);font-size:13px;letter-spacing:.8px;
+    color:var(--yellow-dim);padding:6px 9px;border-radius:5px;cursor:pointer;transition:.2s;white-space:nowrap}
+  nav a:hover{color:var(--yellow)}
+  nav a.aktiv{color:var(--green);text-shadow:0 0 10px rgba(201,160,99,.55);background:rgba(201,160,99,.08)}
+  @media(max-width:980px){nav a{font-size:10px;padding:6px 6px}}
+
+  /* ── Slides ─────────────────────────── */
+  .deck{position:relative;height:100%}
+  .slide{
+    position:absolute;inset:0;padding:calc(var(--nav-h) + 4vh) 7vw 7vh;
+    display:flex;flex-direction:column;justify-content:center;
+    opacity:0;visibility:hidden;transform:translateY(24px);
+    transition:opacity .5s ease,transform .5s ease,visibility .5s;
+    overflow:auto;
+  }
+  .slide.aktiv{opacity:1;visibility:visible;transform:none}
+  .slide.aktiv .reveal{animation:rise .55s both}
+  .slide.aktiv .reveal:nth-child(2){animation-delay:.07s}
+  .slide.aktiv .reveal:nth-child(3){animation-delay:.14s}
+  .slide.aktiv .reveal:nth-child(4){animation-delay:.21s}
+  .slide.aktiv .reveal:nth-child(5){animation-delay:.28s}
+  .slide.aktiv .reveal:nth-child(6){animation-delay:.35s}
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+  .eyebrow{font-family:var(--sans);font-weight:600;font-size:13px;
+    letter-spacing:4px;text-transform:uppercase;color:var(--pink);margin-bottom:16px;display:inline-flex;align-items:center;gap:14px}
+  .eyebrow::before{content:"";width:28px;height:1px;background:linear-gradient(90deg,var(--pink),transparent)}
+  .rule{height:1px;border:none;background:linear-gradient(90deg,var(--pink),transparent);
+    margin:14px 0 24px;max-width:540px}
+  p{max-width:820px;margin-bottom:10px}
+  .lead{font-size:clamp(18px,1.9vw,22px);color:var(--yellow)}
+  .small{font-size:13px;color:var(--yellow-dim)}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:stretch}
+  @media(max-width:900px){.cols{grid-template-columns:1fr;gap:22px}}
+
+  ul.neon{list-style:none}
+  ul.neon li{position:relative;padding-left:22px;margin:9px 0}
+  ul.neon li::before{content:"\25B8";position:absolute;left:0;color:var(--pink)}
+
+  .btn{display:inline-block;font-family:var(--sans);font-weight:600;font-size:16px;letter-spacing:.5px;
+    color:var(--green);background:transparent;padding:9px 0;border-radius:0;letter-spacing:.4px;text-decoration:none;
+    border-bottom:1px solid var(--pink);box-shadow:none;transition:.2s;margin-top:24px;cursor:pointer}
+  .btn:hover{color:var(--pink-soft);border-bottom-color:var(--pink-soft);padding-right:14px}
+
+  /* ── Vergleichs-Karten ───────────────── */
+  .vs{display:grid;grid-template-columns:1fr auto 1fr;gap:24px;align-items:stretch;margin-top:6px}
+  @media(max-width:900px){.vs{grid-template-columns:1fr;gap:16px}}
+  .vs .mid{display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-style:normal;font-weight:700;font-size:14px;color:var(--yellow-dim);letter-spacing:1px}
+  @media(max-width:900px){.vs .mid{padding:4px 0}}
+  .card{background:var(--bg-elev);border:1px solid var(--line);border-radius:14px;padding:24px;transition:.2s}
+  .card:hover{border-color:var(--pink);box-shadow:0 0 24px rgba(192,96,58,.15);transform:translateY(-3px)}
+  .card.codex{border-color:rgba(201,160,99,.45)}
+  .card .lbl{font-family:var(--mono);font-style:normal;font-weight:700;font-size:12px;letter-spacing:1.5px;
+    display:inline-flex;align-items:center;gap:8px;padding:4px 11px;border-radius:20px;margin-bottom:14px}
+  .card .lbl i{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .l-gpt{color:#7fd7ff;background:rgba(127,215,255,.1)}.l-gpt i{background:#7fd7ff}
+  .l-cdx{color:var(--green);background:rgba(201,160,99,.12)}.l-cdx i{background:var(--green)}
+  .card h3{font-size:21px;margin-bottom:8px}
+  .card .sub{font-size:14px;color:var(--yellow-dim);margin-bottom:14px}
+  .card ul.neon li{font-size:14.5px;margin:8px 0}
+
+  .takeaway{margin-top:24px;border-left:2px solid var(--pink);padding:10px 0 10px 18px;max-width:840px}
+  .takeaway .lead{margin-bottom:0}
+
+  /* ── Zugangs-Optionen ────────────────── */
+  .ways{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:6px}
+  @media(max-width:980px){.ways{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.ways{grid-template-columns:1fr}}
+  .way{background:var(--bg-elev);border:1px solid var(--line);border-radius:14px;padding:20px;transition:.2s}
+  .way:hover{border-color:var(--pink);box-shadow:0 0 24px rgba(235,255,26,.12);transform:translateY(-3px)}
+  .way .ico{font-style:normal;font-size:24px;display:block;margin-bottom:10px}
+  .way h3{font-size:18px;margin-bottom:6px}
+  .way p{font-size:13.5px;color:var(--silver-dim);margin-bottom:0}
+
+  .reco{margin-top:26px;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:14px;
+    background:linear-gradient(90deg,rgba(57,255,20,.06),transparent 70%);padding:22px 24px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:10px 26px;justify-content:space-between}
+  .reco .txt{max-width:560px}
+  .reco .txt .lead{margin-bottom:4px}
+  .reco .dl{display:inline-block;font-family:var(--sans);font-weight:600;font-size:16px;letter-spacing:.5px;
+    color:var(--bg);background:var(--gold);padding:12px 22px;border-radius:10px;border:none;white-space:nowrap;
+    box-shadow:0 0 22px rgba(57,255,20,.35);transition:.2s}
+  .reco .dl:hover{background:#5cff42;box-shadow:0 0 30px rgba(57,255,20,.55);transform:translateY(-2px)}
+  .reco .url{font-family:var(--mono);font-size:12px;color:var(--silver-dim);display:block;margin-top:6px;
+    word-break:break-all;border-bottom:none}
+
+  /* ── Screenshot + Legende ────────────── */
+  .shot{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg-elev);
+    box-shadow:0 14px 50px rgba(0,0,0,.55),0 0 26px rgba(235,255,26,.06)}
+  .shot img{display:block;width:100%;height:auto}
+  .cap{font-family:var(--mono);font-size:11px;color:var(--silver-dim);margin-top:9px;letter-spacing:.5px}
+  ol.guide{list-style:none;counter-reset:g;margin-top:4px}
+  ol.guide li{position:relative;padding-left:40px;margin:14px 0}
+  ol.guide li::before{counter-increment:g;content:counter(g);position:absolute;left:0;top:0;
+    width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-weight:600;font-size:13px;color:var(--bg);background:var(--gold);
+    box-shadow:0 0 14px rgba(57,255,20,.35)}
+  ol.guide li b{color:var(--gold);font-weight:600}
+  ol.guide li .d{display:block;font-size:13.5px;color:var(--silver-dim);margin-top:2px}
+
+  /* ── Hover-Erklärungen (Tooltips) ────── */
+  .tip{position:relative;color:var(--silver);font-weight:500;cursor:help;
+    border-bottom:1px dotted var(--bronze)}
+  .tip .pop{
+    position:absolute;left:50%;bottom:calc(100% + 10px);transform:translate(-50%,6px);
+    width:240px;z-index:40;padding:11px 13px;border-radius:10px;
+    background:var(--bg-elev2);border:1px solid var(--line);
+    box-shadow:0 12px 34px rgba(0,0,0,.6),0 0 18px rgba(235,255,26,.10);
+    font-family:var(--sans);font-weight:300;font-size:13px;line-height:1.55;
+    color:var(--silver);text-align:left;letter-spacing:0;
+    opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease,transform .18s ease}
+  .tip .pop b{color:var(--gold);font-weight:600}
+  .tip .pop::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+    border:7px solid transparent;border-top-color:var(--line)}
+  .tip:hover .pop,.tip:focus .pop{opacity:1;visibility:visible;transform:translate(-50%,0);pointer-events:auto}
+  @media(max-width:560px){.tip .pop{width:200px}}
+
+  /* ── Großes Bild mit Hover-Feldern ───── */
+  .figure{position:relative;width:100%;max-width:1180px;margin:0 auto;
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    box-shadow:0 16px 54px rgba(0,0,0,.6),0 0 26px rgba(235,255,26,.06)}
+  .figure img{display:block;width:100%;height:auto}
+  .spot{position:absolute;border-radius:8px;cursor:help;z-index:5;
+    border:1px solid transparent;transition:border-color .15s,background .15s,box-shadow .15s}
+  .spot:hover{border-color:var(--bronze);background:rgba(235,255,26,.10);
+    box-shadow:0 0 18px rgba(235,255,26,.30)}
+  .spot .pop{position:absolute;width:230px;z-index:40;padding:11px 13px;border-radius:10px;
+    background:var(--bg-elev2);border:1px solid var(--line);
+    box-shadow:0 12px 34px rgba(0,0,0,.65),0 0 18px rgba(235,255,26,.10);
+    font-family:var(--sans);font-weight:300;font-size:13px;line-height:1.55;color:var(--silver);
+    text-align:left;opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity .18s ease,transform .18s ease}
+  .spot .pop b{color:var(--gold);font-weight:600}
+  .spot:hover .pop{opacity:1;visibility:visible;pointer-events:auto}
+  /* Popup-Richtungen */
+  .spot.r .pop{left:calc(100% + 12px);top:50%;transform:translateY(-50%) translateX(6px)}
+  .spot.r:hover .pop{transform:translateY(-50%) translateX(0)}
+  .spot.u .pop{bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(6px)}
+  .spot.u:hover .pop{transform:translateX(-50%) translateY(0)}
+  @media(max-width:680px){.spot .pop{width:170px;font-size:11.5px;padding:8px 10px}}
+
+  /* ── Prompt-Fenster ──────────────────── */
+  .promptwin{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg-elev);
+    box-shadow:0 14px 50px rgba(0,0,0,.5)}
+  .promptwin .bar{display:flex;align-items:center;gap:8px;padding:9px 13px;background:var(--bg-elev2);
+    border-bottom:1px solid var(--line)}
+  .promptwin .bar i{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .promptwin .bar .t{font-family:var(--mono);font-size:11px;color:var(--silver-dim);margin-left:6px}
+  .promptwin .body{padding:15px 16px;font-family:var(--mono);font-size:12.5px;line-height:1.65;color:var(--silver)}
+  .promptwin .body .ttl{color:var(--bronze)}
+  .promptwin .body ul{list-style:none;margin:4px 0 6px}
+  .promptwin .body li{position:relative;padding-left:14px;color:var(--silver-dim)}
+  .promptwin .body li::before{content:"–";position:absolute;left:0;color:var(--bronze)}
+  .runbtn{margin-top:12px;display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.5px;
+    color:var(--bg);background:var(--gold);padding:8px 16px;border-radius:8px;
+    box-shadow:0 0 18px rgba(57,255,20,.30)}
+  .next{list-style:none;counter-reset:n;margin-top:4px}
+  .next li{position:relative;padding-left:30px;margin:11px 0;font-size:14.5px}
+  .next li::before{counter-increment:n;content:counter(n);position:absolute;left:0;top:1px;
+    width:21px;height:21px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-weight:600;font-size:11px;color:var(--bg);background:var(--bronze)}
+
+  /* ── Steuerung ──────────────────────── */
+  .progress{position:fixed;left:0;bottom:0;height:3px;background:var(--pink);
+    box-shadow:0 0 10px var(--pink);z-index:30;transition:width .4s ease}
+  .pager{position:fixed;right:22px;bottom:16px;z-index:30;font-family:var(--mono);
+    font-style:normal;font-size:12px;color:var(--yellow-dim);letter-spacing:1px}
+  .pager b{color:var(--green)}
+  .arrows{position:fixed;left:22px;bottom:14px;z-index:30;display:flex;gap:8px}
+  .arrows button{font-family:var(--mono);background:var(--bg-elev);color:var(--yellow-dim);
+    border:1px solid var(--line);border-radius:7px;width:34px;height:30px;cursor:pointer;transition:.2s}
+  .arrows button:hover{color:var(--green);border-color:var(--green)}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <span class="marke"><img class="logo" src="tm-logo.png" alt="textil+mode"><span class="brand-txt">Codex</span></span>
+</nav>
+
+<div class="deck" id="deck">
+
+  <!-- 1 ── Titel im textil+mode-Template ─── -->
+  <section class="slide" data-titel="Start">
+    <span class="eyebrow reveal">Einleitung · 25. Juni 2026 · textil+mode</span>
+    <h1 class="reveal">Codex —<br>was ist das<br><em style="color:var(--pink)">eigentlich?</em></h1>
+    <hr class="rule reveal">
+    <p class="lead reveal">Ein erster Überblick: Was Codex kann, wie es sich von ChatGPT
+      unterscheidet — und warum das für unsere Arbeit einen Unterschied macht.</p>
+    <span class="btn reveal" onclick="go(1)">Los geht's →</span>
+  </section>
+
+  <!-- 2 ── Was ist Codex? ChatGPT-Vergleich ─ -->
+  <section class="slide" data-titel="Was ist Codex?">
+    <span class="eyebrow reveal">01 · Codex vs. ChatGPT</span>
+    <h2 class="reveal">Was ist Codex überhaupt?</h2>
+    <hr class="rule reveal">
+    <p class="lead reveal" style="margin-bottom:18px">Beide stecken voller KI — der Unterschied liegt darin,
+      <strong>was sie damit tun</strong>: reden oder handeln.</p>
+
+    <div class="vs reveal">
+      <div class="card">
+        <span class="lbl l-gpt"><i></i>CHATGPT</span>
+        <h3>Redet mit euch</h3>
+        <div class="sub">Ein Chat-Fenster — fragen, antworten lassen.</div>
+        <ul class="neon">
+          <li>Gibt Text, Ideen und Erklärungen <em>zurück</em></li>
+          <li>Ihr kopiert das Ergebnis selbst weiter</li>
+          <li>Kennt eure Dateien & Projekte <em>nicht</em></li>
+          <li>Macht selbst nichts auf eurem Rechner</li>
+        </ul>
+      </div>
+
+      <div class="mid">vs.</div>
+
+      <div class="card codex">
+        <span class="lbl l-cdx"><i></i>CODEX</span>
+        <h3>Arbeitet für euch</h3>
+        <div class="sub">Ein Assistent direkt in eurem Projekt-Ordner.</div>
+        <ul class="neon">
+          <li>Liest, ändert und <strong>baut Dateien</strong> wirklich</li>
+          <li>Erledigt die Aufgabe statt nur zu beschreiben</li>
+          <li>Kennt euren Ordner und arbeitet darin</li>
+          <li>Zeigt jeden Schritt zur <strong>Freigabe</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="takeaway reveal">
+      <p class="lead"><strong>Kurz gesagt:</strong> ChatGPT <em>sagt euch</em>, wie es geht —
+        Codex <em>macht es</em>, unter eurer Kontrolle.</p>
+    </div>
+  </section>
+
+  <!-- 3 ── Wie arbeitet man mit Codex? ───── -->
+  <section class="slide" data-titel="Zugang">
+    <span class="eyebrow reveal">02 · Wie öffnet man Codex?</span>
+    <h2 class="reveal">Vier Wege zu Codex</h2>
+    <hr class="rule reveal">
+    <p class="lead reveal" style="margin-bottom:18px">Codex gibt es in mehreren Varianten — je nachdem,
+      wo und wie ihr arbeiten wollt:</p>
+
+    <div class="ways reveal">
+      <div class="way">
+        <h3>Desktop-App</h3>
+        <p>Eigenes Programm zum Installieren — klickbar, übersichtlich, kein Vorwissen nötig.</p>
+      </div>
+      <div class="way">
+        <h3>Cloud / Web</h3>
+        <p>Direkt im Browser über ChatGPT — nichts installieren, von überall erreichbar.</p>
+      </div>
+      <div class="way">
+        <h3>Terminal (CLI)</h3>
+        <p>Per Befehl in der Kommandozeile — schnell und schlank für geübte Nutzer.</p>
+      </div>
+      <div class="way">
+        <h3>IDE-Erweiterung</h3>
+        <p>Direkt in der Programmier-Umgebung (z. B. VS Code) für Entwickler:innen.</p>
+      </div>
+    </div>
+
+    <div class="reco reveal">
+      <div class="txt">
+        <p class="lead"><strong>Unsere Empfehlung:</strong> die <em>Desktop-App</em> — am komfortabelsten
+          und der einfachste Einstieg.</p>
+        <a class="url" href="https://chatgpt.com/de-DE/codex/" target="_blank" rel="noopener">https://chatgpt.com/de-DE/codex/</a>
+      </div>
+      <a class="dl" href="https://chatgpt.com/de-DE/codex/" target="_blank" rel="noopener">Herunterladen &amp; installieren →</a>
+    </div>
+  </section>
+
+  <!-- 4 ── Menüführung im Überblick ──────── -->
+  <section class="slide" data-titel="Überblick">
+    <span class="eyebrow reveal">03 · Der erste Blick in die App</span>
+    <h2 class="reveal">Was sehe ich hier?</h2>
+    <hr class="rule reveal">
+    <div class="cols" style="grid-template-columns:1.25fr 1fr;align-items:start">
+      <div class="reveal">
+        <div class="shot"><img src="101.png" alt="Codex-Desktop-App: Startbildschirm mit Menü links und Eingabefeld in der Mitte"></div>
+        <div class="cap">Der Startbildschirm der Codex-Desktop-App.</div>
+      </div>
+      <div class="reveal">
+        <p class="small" style="margin-bottom:10px">Fahre mit der Maus über die <span class="tip">hervorgehobenen Begriffe<span class="pop">Genau so: Bei <b>Mouseover</b> öffnet sich automatisch eine kurze Erklärung — Maus weg, schließt sie wieder.</span></span> für eine kurze Erklärung.</p>
+        <ol class="guide">
+          <li><b>Menü links</b>
+            <span class="d"><span class="tip">Neuer Chat<span class="pop"><b>Neuer Chat:</b> startet ein frisches Gespräch mit Codex — wie ein leeres Blatt.</span></span>,
+              <span class="tip">Suche<span class="pop"><b>Suche:</b> findet ältere Gespräche und Inhalte schnell wieder.</span></span>,
+              <span class="tip">Projekt<span class="pop"><b>Projekt:</b> der Ordner auf dem Rechner, an dem Codex arbeiten soll.</span></span>,
+              <span class="tip">Plugins<span class="pop"><b>Plugins:</b> Erweiterungen, die Codex neue Fähigkeiten geben — z. B. ein fertiges Design oder einen Tool-Anschluss.</span></span>.
+              Hier findest du alles zum Starten.</span></li>
+          <li><b><span class="tip">Eingabefeld<span class="pop"><b>Eingabefeld:</b> das Feld in der Mitte, in das du deinen Auftrag schreibst.</span></span> in der Mitte</b>
+            <span class="d">„Tu, was du willst" — hier tippst du deinen Auftrag in normalem Deutsch.</span></li>
+          <li><b>Leiste unter dem Feld</b>
+            <span class="d"><span class="tip">Modus<span class="pop"><b>Modus:</b> legt fest, wie viel Codex selbst darf — von „immer fragen" bis „freie Hand".</span></span>,
+              <span class="tip">Modell &amp; Tempo<span class="pop"><b>Modell &amp; Tempo:</b> welche KI rechnet und wie gründlich. Mehr Tempo-Stufe = gründlicher, aber langsamer.</span></span>,
+              <span class="tip">Projekt wählen<span class="pop"><b>Projekt wählen:</b> bestimmt, in welchem Ordner Codex arbeitet.</span></span>,
+              <span class="tip">Absenden<span class="pop"><b>Absenden:</b> schickt deinen Auftrag an Codex ab (Pfeil-Knopf oder Enter).</span></span>.</span></li>
+          <li><b><span class="tip">Einstellungen<span class="pop"><b>Einstellungen:</b> Konto, Sprache und feste Vorgaben anpassen.</span></span> unten links</b>
+            <span class="d">Konto, Vorgaben und alles zum Anpassen.</span></li>
+        </ol>
+      </div>
+    </div>
+    <p class="small reveal" style="margin-top:16px">Kurz: <strong>links</strong> wählen, <strong>in der Mitte</strong> tippen,
+      <strong>unten</strong> Modus &amp; Tempo einstellen — und absenden.</p>
+  </section>
+
+  <!-- 5 ── Plugins, Automatisierungen, Projekte ─ -->
+  <section class="slide" data-titel="Bausteine">
+    <span class="eyebrow reveal">04 · Drei wichtige Begriffe</span>
+    <h2 class="reveal">Plugins, Automatisierungen &amp; Projekte</h2>
+    <hr class="rule reveal">
+    <p class="lead reveal" style="margin-bottom:18px">Drei Bausteine, mit denen Codex über das reine Schreiben hinaus
+      <strong>an eure Werkzeuge andockt</strong> und Arbeit übernimmt:</p>
+
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+      <div class="card">
+        <h3>Plugins</h3>
+        <div class="sub" style="font-size:14px;color:var(--silver-dim);margin-bottom:10px">Anschluss an andere Dienste</div>
+        <p style="font-size:14.5px">Erweiterungen, die Codex mit euren Programmen verbinden. <strong>Beispiel Gmail:</strong>
+          einmal verbunden, kann Codex eure E-Mails lesen, zusammenfassen oder einen Entwurf vorbereiten.</p>
+        <p class="small" style="margin-top:10px">Weitere: GitHub, Google Drive, Kalender …</p>
+      </div>
+      <div class="card">
+        <h3>Automatisierungen</h3>
+        <div class="sub" style="font-size:14px;color:var(--silver-dim);margin-bottom:10px">Einmal einrichten, läuft von selbst</div>
+        <p style="font-size:14.5px">Wiederkehrende Abläufe, die Codex <strong>automatisch</strong> erledigt — ohne dass ihr jedes Mal
+          fragt. <strong>Beispiel:</strong> jeden Montag die neuen E-Mails zusammenfassen.</p>
+        <p class="small" style="margin-top:10px">Gut für Routine-Aufgaben nach festem Plan.</p>
+      </div>
+      <div class="card">
+        <h3>Projekte</h3>
+        <div class="sub" style="font-size:14px;color:var(--silver-dim);margin-bottom:10px">Der Ordner, in dem gearbeitet wird</div>
+        <p style="font-size:14.5px">Der Arbeitsbereich auf eurem Rechner. Codex <strong>kennt nur, was im Projekt liegt</strong> —
+          so bleibt alles übersichtlich und getrennt.</p>
+        <p class="small" style="margin-top:10px">Pro Aufgabe ein eigenes Projekt = Ordnung.</p>
+      </div>
+    </div>
+
+    <p class="small reveal" style="margin-top:18px">Kurz: <strong>Plugins</strong> verbinden, <strong>Automatisierungen</strong>
+      wiederholen, <strong>Projekte</strong> ordnen.</p>
+  </section>
+
+  <!-- 6 ── Einstellungen vor dem ersten Prompt ─ -->
+  <section class="slide" data-titel="Vor dem Prompt">
+    <span class="eyebrow reveal">05 · Neuer Chat – erst einstellen, dann tippen</span>
+    <h2 class="reveal">Was du vor dem ersten Prompt wählst</h2>
+    <hr class="rule reveal">
+    <p class="lead reveal" style="margin-bottom:16px">Alles direkt am Eingabefeld – ein neuer Chat, vier kleine Entscheidungen,
+      <strong>bevor</strong> du den Auftrag abschickst:</p>
+    <div class="cols" style="grid-template-columns:1fr 1.05fr;align-items:start">
+      <div class="reveal">
+        <div class="shot"><img src="101.png" alt="Codex-Desktop-App: Eingabefeld mit Modus, Modell und Projektwahl"></div>
+        <div class="cap">Modus &amp; Modell unten im Feld, Projektwahl direkt darunter.</div>
+      </div>
+      <div class="reveal">
+        <ol class="guide">
+          <li><b>Modus – wie viel darf Codex selbst?</b>
+            <span class="d"><span class="tip">Genehmigung anfordern<span class="pop"><b>Genehmigung anfordern:</b> fragt vor jedem Bearbeiten externer Dateien und vor Internetnutzung nach.</span></span>
+              · <span class="tip">Für mich genehmigen<span class="pop"><b>Für mich genehmigen:</b> arbeitet selbstständig, fragt nur bei potenziell unsicheren Aktionen.</span></span>
+              · <span class="tip">Vollzugriff<span class="pop"><b>Vollzugriff:</b> uneingeschränkter Zugriff auf Internet und alle Dateien – mit Vorsicht.</span></span></span></li>
+          <li><b>Modell – welche KI rechnet?</b>
+            <span class="d"><span class="tip">GPT-5.5<span class="pop"><b>GPT-5.5:</b> das stärkste Standard-Modell.</span></span>,
+              <span class="tip">GPT-5.4<span class="pop"><b>GPT-5.4:</b> die Vorgänger-Generation.</span></span> oder
+              <span class="tip">GPT-5.4-Mini<span class="pop"><b>GPT-5.4-Mini:</b> kleiner und schneller, für einfache Aufgaben.</span></span></span></li>
+          <li><b>Denktiefe &amp; Tempo</b>
+            <span class="d"><span class="tip">Schlussfolgern<span class="pop"><b>Schlussfolgern (Denktiefe):</b> Niedrig · Mittel · Hoch · Extra hoch. Mehr = gründlicher, aber langsamer.</span></span>
+              von Niedrig bis Extra hoch, plus <span class="tip">Geschwindigkeit<span class="pop"><b>Geschwindigkeit:</b> Standard oder Schnell (1,5×, höherer Verbrauch).</span></span>.</span></li>
+          <li><b>Projekt öffnen – woran wird gearbeitet?</b>
+            <span class="d">Klick auf <span class="tip">„In einem Projekt arbeiten"<span class="pop"><b>So öffnest du ein Projekt:</b> unten am Eingabefeld auf „In einem Projekt arbeiten" klicken – dann erscheinen die beiden Möglichkeiten.</span></span>, dann
+              <span class="tip">Von vorne anfangen<span class="pop"><b>Von vorne anfangen:</b> Codex legt einen frischen, leeren Ordner als Arbeitsbereich an.</span></span> (neuer Ordner) oder
+              <span class="tip">Vorhandenen Ordner verwenden<span class="pop"><b>Vorhandenen Ordner verwenden:</b> du wählst einen bestehenden Ordner auf dem Rechner aus.</span></span>.</span></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="reco reveal" style="margin-top:22px">
+      <div class="txt" style="max-width:100%">
+        <p class="lead" style="margin-bottom:4px"><strong>Wichtig – der Ordner ist die Grenze:</strong></p>
+        <p class="small" style="margin-bottom:0">Sobald ein Ordner geöffnet oder erstellt ist, arbeitet Codex <em>nur in diesem Ordner</em>.
+          Es kennt auch <em>nur</em> das, was darin liegt – plus das, was über die <strong>Plugins</strong> angebunden ist.
+          Alles außerhalb bleibt unberührt und unsichtbar.</p>
+      </div>
+    </div>
+
+    <p class="small reveal" style="margin-top:16px">Faustregel zum Start: <strong>Für mich genehmigen</strong>, Modell <strong>GPT-5.5</strong>,
+      Denktiefe <strong>Mittel</strong> – und ein eigener Projekt-Ordner.</p>
+  </section>
+
+  <!-- 7 ── Beispiel-Prompt & was dann passiert ─ -->
+  <section class="slide" data-titel="Beispiel">
+    <span class="eyebrow reveal">06 · Ein Auftrag – live</span>
+    <h2 class="reveal">Beispiel: Eine Info-Seite bauen lassen</h2>
+    <hr class="rule reveal">
+    <div class="cols" style="grid-template-columns:1.1fr 1fr;align-items:start">
+      <div class="reveal">
+        <div class="promptwin">
+          <div class="bar"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i>
+            <span class="t">codex-demo · Für mich genehmigen · GPT-5.5 Mittel</span></div>
+          <div class="body">
+            Erstelle eine übersichtliche Info-Seite über Codex als einzelne Datei <span class="ttl">(codex-uebersicht.html)</span>.<br>
+            Inhalt, in dieser Reihenfolge:
+            <ul>
+              <li>Titel + ein Satz, was Codex ist</li>
+              <li>„Codex vs. ChatGPT" – ChatGPT antwortet, Codex handelt</li>
+              <li>„Wie öffne ich Codex?" – App, Web, Terminal, IDE</li>
+              <li>„Vor dem ersten Prompt" – Modus, Modell, Denktiefe, Ordner</li>
+              <li>„Goldene Regeln" – klein anfangen, prüfen, freigeben</li>
+            </ul>
+            Design: fast schwarz, Raster, Silber-Text, Neongrün-Titel,
+            Neongelb-Akzente, Schrift Jost. Einfaches Deutsch.
+          </div>
+        </div>
+        <span class="runbtn reveal">▶ Ausführen ↵</span>
+      </div>
+
+      <div class="reveal">
+        <h3 style="font-size:19px;margin-bottom:4px">Was dann passiert</h3>
+        <ol class="next">
+          <li>Codex <strong>liest den Ordner</strong> und plant die Schritte.</li>
+          <li>Es <strong>legt die Datei</strong> <span style="font-family:var(--mono);font-size:12.5px;color:var(--bronze)">codex-uebersicht.html</span> selbst an.</li>
+          <li>Jeder Schritt ist <strong>sichtbar</strong> – du prüfst und gibst frei.</li>
+          <li>Fertig: die Seite liegt im Ordner und <strong>öffnet im Browser</strong>.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="vs reveal" style="margin-top:22px">
+      <div class="card">
+        <span class="lbl l-gpt"><i></i>MIT CHATGPT</span>
+        <p style="font-size:14.5px;margin-bottom:0">Du bekommst den <em>Code als Text</em> – kopieren, eine Datei anlegen,
+          einfügen, speichern, im Browser öffnen. Alles von Hand.</p>
+      </div>
+      <div class="mid">vs.</div>
+      <div class="card codex">
+        <span class="lbl l-cdx"><i></i>MIT CODEX</span>
+        <p style="font-size:14.5px;margin-bottom:0">Die <strong>fertige Datei liegt schon im Ordner</strong> – getestet und bereit.
+          Kein Kopieren, kein Zusammenbauen. Du prüfst nur noch das Ergebnis.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 ── Coole Anwendungsfälle ─────────── -->
+  <section class="slide" data-titel="Ideen">
+    <span class="eyebrow reveal">07 · Wofür man es nutzen kann</span>
+    <h2 class="reveal">Coole Anwendungsfälle</h2>
+    <hr class="rule reveal">
+    <p class="lead reveal" style="margin-bottom:16px">Vom Vortrag bis zum kleinen Werkzeug – ein paar Ideen,
+      die mit Codex in Minuten statt Stunden entstehen:</p>
+
+    <div class="cols reveal" style="align-items:stretch">
+      <div class="card codex">
+        <span class="lbl l-cdx"><i></i>STATT POWERPOINT</span>
+        <h3>Präsentationen als HTML-Seite</h3>
+        <p style="font-size:14px">Genau wie diese hier – eine Datei, die im Browser läuft.</p>
+        <ul class="neon" style="margin-top:6px">
+          <li>Per Link oder Datei teilbar – keine Software nötig</li>
+          <li>Eigenes Design, Animationen, echte Live-Inhalte (Video, Hover)</li>
+          <li>Auf jedem Gerät gleich, responsive</li>
+          <li>Schnell geändert – ein Satz genügt</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="lbl l-cdx"><i></i>KLEINE WERKZEUGE</span>
+        <h3>Web-Apps selbst bauen</h3>
+        <p style="font-size:14px">Kleine Helfer für den Alltag – ohne Programmierkenntnisse.</p>
+        <ul class="neon" style="margin-top:6px">
+          <li>Rechner: Marge, Rabatt, Mengen, Größen-Umrechnung</li>
+          <li>Interaktive Checklisten &amp; Formulare</li>
+          <li>Such- &amp; Filter-Listen für Produkte</li>
+          <li>Mini-Tools: QR-Codes, Etiketten, Übersichten</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px">
+      <div class="card">
+        <h3 style="font-size:17px">Daten aufbereiten</h3>
+        <p class="small" style="margin-bottom:0">Excel/CSV → saubere Tabelle, Diagramm oder kleines Dashboard als HTML.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size:17px">Texte &amp; Listen umbauen</h3>
+        <p class="small" style="margin-bottom:0">Produkttexte, Serienbriefe, Tabellen sortieren, umformatieren, zusammenfassen.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size:17px">Anleitungen &amp; Onboarding</h3>
+        <p class="small" style="margin-bottom:0">Schritt-für-Schritt-Seiten für Kolleg:innen – wie unsere Codex-Übersicht.</p>
+      </div>
+    </div>
+
+    <p class="small reveal" style="margin-top:18px">Faustregel: Wenn es eine <strong>Datei</strong>, eine <strong>Seite</strong>
+      oder <strong>Fleißarbeit</strong> ist – Codex kann es übernehmen.</p>
+  </section>
+
+</div>
+
+<div class="progress" id="progress"></div>
+<div class="pager" id="pager"><b>1</b> / 8</div>
+<div class="arrows"><button onclick="go(i-1)">‹</button><button onclick="go(i+1)">›</button></div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const nav=document.getElementById('nav');
+  const progress=document.getElementById('progress');
+  const pager=document.getElementById('pager');
+  let i=0;
+
+  slides.forEach((s,idx)=>{
+    const a=document.createElement('a');
+    a.textContent=(idx+1<10?'0':'')+(idx+1)+' '+s.dataset.titel;
+    a.onclick=()=>go(idx);
+    nav.appendChild(a);
+  });
+  const links=[...nav.querySelectorAll('a')];
+
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,idx)=>{s.classList.toggle('aktiv',idx===i); if(idx===i)s.scrollTop=0;});
+    links.forEach((a,idx)=>a.classList.toggle('aktiv',idx===i));
+    progress.style.width=((i+1)/slides.length*100)+'%';
+    pager.innerHTML='<b>'+(i+1)+'</b> / '+slides.length;
+    location.hash=i+1;
+  }
+  window.go=go; window.__i=()=>i;
+  Object.defineProperty(window,'i',{get:()=>i});
+
+  addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1)}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1)}
+    if(e.key==='Home')go(0); if(e.key==='End')go(slides.length-1);
+  });
+  go(parseInt(location.hash.slice(1))-1||0);
+</script>
+</body>
+</html>
